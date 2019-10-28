@@ -2,40 +2,57 @@
   <div>
     <div class="main-left">
       <van-sidebar v-model="activeKey">
-        <van-sidebar-item v-for="(key,index) in shop" :title="key.category_name" :key="index" />
+        <van-sidebar-item
+          v-for="(key,index) in shop"
+          :title="key.category_name"
+          :key="index"
+          :class="{active: active===index }"
+        />
       </van-sidebar>
     </div>
 
-    <div v-for="(key,index) in shop" :key="index" class="list-wrap">
-      <div class="list-item category0">
-        <div class="component-list-main">
-          <div class="cells_auto_fill" index="0">
+    <div class="list-wrap">
+      <div v-for="(key,index) in shop" :key="index" class="list-item category0">
+        <div v-for="(key,index) in key.category_list" :key="index" class="component-list-main">
+          <!-- img -->
+          <div
+            v-if="key.body.items&& key.body.items[0].path_type=='image'"
+            class="cells_auto_fill"
+            index="0"
+          >
             <a class="exposure items" style="height:5.541746rem;width:13.854364rem">
               <img
+                :src="key.body.items?key.body.items[0].img_url_webp:''"
                 style="height:5.541746rem;width:13.854364rem ;"
-                src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/69b470df9b6a61ca62379214c2bba303.jpg?thumb=1&amp;w=500&amp;h=200"
                 lazy="loaded"
               />
             </a>
           </div>
-          <div name="m1" class="category_title">
-            <span>手机</span>
+          <!-- biaoti -->
+          <div v-if="key.body.category_name" name="m1" class="category_title">
+            <span>{{key.body.category_name}}</span>
           </div>
-          <!---->
-          <div class="category_group box-flex" index="2">
+          <!-- zhangshi -->
+          <div
+            v-if="key.body.items&&key.body.items.length >1"
+            class="category_group box-flex"
+            index="2"
+          >
+            <!-- disan -->
             <div class="box">
-              <div class="product">
+              <div v-for="(key,index) in key.body.items" :key="index" class="product">
                 <a class="exposure item">
                   <div data-v-6b9822de class="img">
                     <img
                       class="big"
                       style="width: 2.760434rem; height: 2.760434rem"
-                      src="//cdn.cnbj1.fds.api.mi-img.com/mi-mall/a78e73027b202757a933083ddd6ffbe0.png?thumb=1&amp;w=120&amp;h=120"
+                      :src="key.img_url_webp"
                       lazy="loaded"
                     />
                     <!---->
                   </div>
-                  <div class="name">Redmi 8</div>
+                  <!-- fubiaoti -->
+                  <div class="name">{{key.product_name}}</div>
                 </a>
               </div>
             </div>
@@ -49,21 +66,58 @@
 export default {
   data() {
     return {
+      active: 0,
       shop: "",
       activeKey: "",
+      src: ""
     };
   },
+
+  // 加载前触发请求拿数据渲染
   created() {
     // window.console.log(this);
     this.axios.get("http://localhost:3000/classify").then(response => {
       const data = response.data;
-      window.console.log("全部数据", data);
-
-      window.console.log(data[0].category_name);
-
+      // window.console.log("全部数据", data);
+      // window.console.log(data[0].category_name);
       this.shop = data;
-      window.console.log(this);
+      // window.console.log(this);
     });
+  },
+  mounted() {
+    // 监听滚动事件
+    window.addEventListener("scroll", this.onScroll);
+    window.console.log(this.onScroll);
+  },
+  destroy() {
+    // 必须移除监听器，不然当该vue组件被销毁了，监听器还在就会出错
+    window.removeEventListener("scroll", this.onScroll);
+  },
+  methods: {
+    // 滚动监听器
+    onScroll() {
+      // 获取所有锚点元素
+      const navContents = document.querySelectorAll(".content div");
+      // 所有锚点元素的 offsetTop
+      const offsetTopArr = [];
+      navContents.forEach(item => {
+        offsetTopArr.push(item.offsetTop);
+      });
+      // 获取当前文档流的 scrollTop
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      // 定义当前点亮的导航下标
+      let navIndex = 0;
+      for (let n = 0; n < offsetTopArr.length; n++) {
+        // 如果 scrollTop 大于等于第 n 个元素的 offsetTop 则说明 n-1 的内容已经完全不可见
+        // 那么此时导航索引就应该是 n 了
+        if (scrollTop >= offsetTopArr[n]) {
+          navIndex = n;
+        }
+      }
+      // 把下标赋值给 vue 的 data
+      this.active = navIndex;
+    }
   }
 };
 </script>
@@ -72,7 +126,11 @@ export default {
 @import "./classify02.css";
 @import "./classify03.css";
 @import "./classify04.css";
-
+/* 侧边导航栏激活改变样式 */
+.active {
+  color: #847ec3;
+  background-color: #e2e2e2;
+}
 .classify {
   position: relative;
   width: 100%;
