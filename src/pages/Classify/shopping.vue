@@ -7,12 +7,13 @@
           :title="key.category_name"
           :key="index"
           :class="{active: active===index }"
+          @click="clicks(index)"
         />
       </van-sidebar>
     </div>
 
     <div class="list-wrap">
-      <div v-for="(key,index) in shop" :key="index" class="list-item category0">
+      <div v-for="(key,index) in shop" :key="index" class="list-item category0" ref="listitem">
         <div v-for="(key,index) in key.category_list" :key="index" class="component-list-main">
           <!-- img -->
           <div
@@ -97,11 +98,15 @@ export default {
     // 滚动监听器
     onScroll() {
       // 获取所有锚点元素
-      const navContents = document.querySelectorAll(".content div");
+      // window.console.log(this);
+      const navContents = this.$refs.listitem;
+      // window.console.log(navContents);
       // 所有锚点元素的 offsetTop
       const offsetTopArr = [];
       navContents.forEach(item => {
+        // window.console.log(item)
         offsetTopArr.push(item.offsetTop);
+        // window.console.log(index, item.offsetTop);
       });
       // 获取当前文档流的 scrollTop
       const scrollTop =
@@ -116,7 +121,11 @@ export default {
         }
       }
       // 把下标赋值给 vue 的 data
+      window.console.log(navIndex);
       this.active = navIndex;
+    },
+    clicks(inx) {
+      window.console.log(inx);
     }
   }
 };
@@ -128,8 +137,8 @@ export default {
 @import "./classify04.css";
 /* 侧边导航栏激活改变样式 */
 .active {
-  color: #847ec3;
-  background-color: #e2e2e2;
+  color: yellow;
+  background-color: purple;
 }
 .classify {
   position: relative;
