@@ -7,7 +7,7 @@
           :title="key.category_name"
           :key="index"
           :class="{active: active===index }"
-          @click="clicks(index)"
+          @click="scrollTo(index)"
         />
       </van-sidebar>
     </div>
@@ -88,7 +88,7 @@ export default {
   mounted() {
     // 监听滚动事件
     window.addEventListener("scroll", this.onScroll);
-    window.console.log(this.onScroll);
+    // window.console.log(this.onScroll);
   },
   destroy() {
     // 必须移除监听器，不然当该vue组件被销毁了，监听器还在就会出错
@@ -124,8 +124,28 @@ export default {
       window.console.log(navIndex);
       this.active = navIndex;
     },
-    clicks(inx) {
-      window.console.log(inx);
+    // clicks(inx) {
+    //   window.console.log(inx);
+    // },
+    scrollTo(index) {
+      // 获取目标的 offsetTop
+      // css选择器是从 1 开始计数，我们是从 0 开始，所以要 +1
+      const targetOffsetTop = this.$refs.listitem[index].offsetTop;
+      // 获取当前 offsetTop
+      let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      // 定义一次跳 50 个像素，数字越大跳得越快，但是会有掉帧得感觉，步子迈大了会扯到蛋
+      // const STEP = 50;
+      // 判断是往下滑还是往上滑
+      if (scrollTop > targetOffsetTop) {
+        // 往上滑
+        // smoothUp();
+        document.documentElement.scrollTop = targetOffsetTop;
+      } else {
+        // 往下滑
+        // smoothDown();
+        document.documentElement.scrollTop = targetOffsetTop;
+      }
     }
   }
 };
@@ -137,8 +157,22 @@ export default {
 @import "./classify04.css";
 /* 侧边导航栏激活改变样式 */
 .active {
-  color: yellow;
-  background-color: purple;
+  color: #fb7d34;
+  font-size: 16px;
+}
+/* 默认状态样式 */
+.van-sidebar-item--select {
+  border-color: transparent;
+  background-color: #fafafa;
+}
+
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+  width: 0 !important;
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0;
 }
 .classify {
   position: relative;
@@ -192,9 +226,12 @@ export default {
   background: #fff;
   overflow: hidden;
 }
+
 .component-list-main .category_group .name {
   margin-top: 0.28rem;
-  white-space: nowrap;
+  /* 设置滚动条 */
+  /* overflow-x: scroll;  */
+  /* white-space: nowrap; */
   font-size: 0.23rem;
   color: rgba(0, 0, 0, 0.54);
 }

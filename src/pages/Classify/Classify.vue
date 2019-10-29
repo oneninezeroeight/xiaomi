@@ -67,6 +67,5 @@ methods: {
   /* max-width: 7.2rem; */
   margin: 0 auto;
 }
-.main-left {
-}
+
 </style>
