@@ -35,13 +35,12 @@
 <script>
 export default {
   data() {
-    return{
-      
-    }
+    return {};
   }
 };
 </script>
 <style scoped lang="less">
+// <!-- 订单页面 -->
 a {
   text-decoration: none;
 }
@@ -62,5 +61,44 @@ a {
     padding: 0 0 0 0.84806rem;
     color: rgba(0, 0, 0, 0.87);
   }
+}
+// <!-- 订单详情 -->
+.b2 {
+  padding: 0 2.204955rem;
+  background-color: #fff;
+  li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-content: space-between;
+    align-content: space-between;
+    position: relative;
+    padding: 1.104068rem 0;
+    span {
+      color: rgba(0, 0, 0, 0.87);
+    }
+  }
+}
+.b2 li:nth-of-type(1) .icon {
+  width: 1.325093rem;
+  height: 1.325093rem;
+  margin: 0 auto 0.41152rem;
+  background: url(./img/dfk.png) no-repeat center 0;
+  background-size: 100% auto;
+}
+.b2 li:nth-of-type(2) .icon {
+  width: 1.325093rem;
+  height: 1.325093rem;
+  margin: 0 auto 0.41152rem;
+  background: url(./img/dsh.png) no-repeat center 0;
+  background-size: 100% auto;
+}
+.b2 li:nth-of-type(3) .icon {
+  width: 1.325093rem;
+  height: 1.325093rem;
+  margin: 0 auto 0.41152rem;
+  background: url(./img/thx.png) no-repeat center 0;
+  background-size: 100% auto;
 }
 </style>

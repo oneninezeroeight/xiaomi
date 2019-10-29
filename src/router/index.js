@@ -5,6 +5,7 @@ import Home from '../pages/Home/Home.vue';
 import Classify from '../pages//Classify/Classify.vue';
 import Cart from '../pages/Cart/Cart.vue';
 import My from '../pages/My/My.vue';
+import Login from "../pages/login/Login.vue";
 const router = new VueRouter({
     mode: "hash",
     routes: [{
@@ -26,6 +27,10 @@ const router = new VueRouter({
             path: "/my",
             name: "my",
             component: My
+        }, {
+            path: "/login",
+            name: "login",
+            component: Login
         }
     ]
 })
