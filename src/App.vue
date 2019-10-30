@@ -1,23 +1,27 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <Footer />
+    <Footer v-show="this.$route.meta.miss" />
   </div>
 </template>
 
 <script>
-import Footer from './components/Footer.vue'
+import Footer from "./components/Footer.vue";
 
 export default {
-  name: 'app',
+  props: ["miss"],
+  name: "app",
   components: {
     Footer
+  },
+  methods: {
+    aa() {
+      window.console.log(this.$route);
+    }
   }
-}
+};
 </script>
 
 <style>
-#app{
-  
-}
+
 </style>

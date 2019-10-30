@@ -29,49 +29,59 @@
               </span>
             </div>
           </div>
+          <!-- 账户名 -->
           <input
             class="item_account"
+            ref="input1"
+            v-model="valueName"
             autocomplete="off"
-            type="text"
+            :type="ti?'number':'text'"
             name="user"
-            id="username"
-            placeholder="邮箱/手机号码/小米ID"
+            :placeholder="ti?k.name1:k.name2"
             _type="text"
           />
-          <input type="hidden" name="log" id="debug_log" />
+          <!-- 清除内容的标签 -->
           <div id="btn-clear-link" class="clear_link_panel">
-            <span class="clear_link"></span>
+            <span v-show="valueName.length>=1" @click="clear" class="clear_link">x</span>
           </div>
         </label>
         <div class="country-container" id="countrycode_container">
           <div class="country_container_con" id="countrycode_container_con"></div>
         </div>
         <label class="labelbox pwd_panel c_b">
+          <!-- 密码选项框 -->
           <input
             class="item_account"
-            type="password"
-            placeholder="密码"
+            :type="ti?'number':'password'"
+            :placeholder="ti?i.name1:i.name2"
+            v-model="valuePass"
             autocomplete="off"
-            id="pwd"
             name="password"
             _type="password"
           />
-          <div id="sms-code-panel" class="code_panel" style="display:none;">
-            <a class="send_ticket" href="javascript:;" id="getSMSCode">获取验证码</a>
+          <!-- 验证码显示隐藏 -->
+          <div id="sms-code-panel" class="code_panel">
+            <a v-show="ti" class="send_ticket" href="javascript:;" id="getSMSCode">获取验证码</a>
           </div>
           <!-- 登录按钮 -->
           <div class="btns_bg">
-            <input class="btnadpt" id="login-button" type="submit" value="登录" />
+            <input @click="login" class="btnadpt" id="login-button" type="submit" value="登录" />
           </div>
           <!-- 切换登录方式按钮 -->
+
           <div class="other_panel clearfix">
             <span id="custom_display_256" class="sms_link">
+              <!-- 添加点击事件切换 不同登录界面-->
+              <!-- 添加一个布尔值，判断状态显示 -->
+              <!-- tel()方法，切换时清除掉原来的值 -->
               <a
-                href="javascript:;"
+                @click="ti = !ti;del()"
+                href="javascript:#;"
                 class="btnadpt btn_gray login_type_link"
                 id="ChangeLoginType"
               >手机短信登录/注册</a>
             </span>
+
             <div class="reverse">
               <div class="n_links_area" id="custom_display_64" style>
                 <a class="outer-link" href="#">立即注册</a>
@@ -79,6 +89,7 @@
                 <a class="outer-link" href="#">忘记密码？</a>
               </div>
             </div>
+            <button @click="go">测试</button>
             <!-- 其他登录方式 s -->
             <div
               style="display: block;"
@@ -134,22 +145,84 @@
       </div>
     </div>
     <!-- 底部组件 -->
+
     <Asiders />
   </div>
 </template>
 
 <script>
 import Asiders from "./Aside";
+import qs from "qs";
 // window.console.log(Asiders)
 // import Vue from "vue";
 // Vue.component("Asider", Asider);
 export default {
+  data() {
+    return {
+      isplay: true,
+      ti: true,
+      valueName: "",
+      valuePass: "",
+      i: { name1: "短信验证码", name2: "密码" },
+      k: { name1: "手机号码", name2: "邮箱/手机号码/小米ID" }
+    };
+  },
   components: {
     Asiders
+  },
+  methods: {
+    clear() {
+      this.valueName = "";
+      this.valuePass = "";
+    },
+    del() {
+      this.valueName = "";
+      this.valuePass = "";
+    },
+    login() {
+      let userName = this.valueName;
+      let passWord = this.valuePass;
+      window.console.log(userName, passWord);
+      if (userName.length == 0) {
+        alert("请输入账号");
+      } else if (passWord.length == 0) {
+        alert("请输入密码");
+      } else {
+        // 拿到用户名和密码，发送请求到服务器拿数据
+        this.axios({
+          method: "post",
+          url: "http://localhost:3000/user",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          data: qs.stringify({
+            userName: userName,
+            passWord: passWord
+          })
+        }).then(response => {
+          const data = response;
+          window.console.log("全部数据", data);
+        });
+      }
+    },
+
+    // 测试函数
+    go() {
+      window.console.log(this.$refs.input1.value);
+    }
+  },
+  watch: {
+    valueName() {
+      // window.console.log(this.valueName.length);
+    }
   }
 };
 </script>
-<style lang="less">
+<style scoped lang="less">
+a {
+  text-decoration: none;
+}
+
 .logo {
   padding-top: 2.650186rem;
   padding-bottom: 0.530037rem;
@@ -239,5 +312,32 @@ export default {
   width: 18px;
   height: 18px;
   margin: 5px auto 0;
+}
+// 获取验证码标签设置
+#sms-code-panel {
+  width: 20%;
+  height: 0.053004rem;
+  position: relative;
+  right: -14.148432rem;
+  top: -1.961138rem;
+  font-size: 0.742052rem;
+  a {
+    color: #2ea5e5;
+  }
+}
+// 账号输入切换
+
+// 清除图标样式设置
+#btn-clear-link .clear_link {
+  color: #fff;
+  display: block;
+  position: absolute;
+  right: 2.332164rem;
+  top: 8.26858rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  // padding: 2px;
 }
 </style>

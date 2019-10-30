@@ -11,26 +11,31 @@ const router = new VueRouter({
     routes: [{
             path: "/",
             name: "Home",
-            component: Home
+            component: Home,
+            meta: { miss: true }
         },
         {
             path: "/classify",
             name: "classify",
-            component: Classify
+            component: Classify,
+            meta: { miss: true }
         },
         {
             path: "/cart",
             name: "cart",
-            component: Cart
+            component: Cart,
+            meta: { miss: true }
         },
         {
             path: "/my",
             name: "my",
-            component: My
+            component: My,
+            meta: { miss: true }
         }, {
             path: "/login",
             name: "login",
-            component: Login
+            component: Login,
+            meta: { miss: false }
         }
     ]
 })

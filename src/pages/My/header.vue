@@ -1,5 +1,5 @@
 <template>
-  <header class="hd">
+  <header @click="go" class="hd">
     <div class="user ui-flex align-center">
       <div class="img">
         <img src="./img/avatar.76a75b8f17.png" />
@@ -9,7 +9,13 @@
   </header>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    go() {
+      this.$router.push({ name: "login" });
+    }
+  }
+};
 </script>
 <style scoped lang="less">
 * {
