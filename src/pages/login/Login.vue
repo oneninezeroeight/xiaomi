@@ -59,9 +59,16 @@
             name="password"
             _type="password"
           />
+
           <!-- 验证码显示隐藏 -->
           <div id="sms-code-panel" class="code_panel">
             <a v-show="ti" class="send_ticket" href="javascript:;" id="getSMSCode">获取验证码</a>
+          </div>
+
+          <!-- 提示信息窗口 -->
+          <div class="Tips">
+            <em class="icon_error"></em>
+            <span class="error-con" v-text="link"></span>
           </div>
           <!-- 登录按钮 -->
           <div class="btns_bg">
@@ -76,7 +83,7 @@
               <!-- tel()方法，切换时清除掉原来的值 -->
               <a
                 @click="ti = !ti;del()"
-                href="javascript:#;"
+                href="#"
                 class="btnadpt btn_gray login_type_link"
                 id="ChangeLoginType"
               >手机短信登录/注册</a>
@@ -84,12 +91,13 @@
 
             <div class="reverse">
               <div class="n_links_area" id="custom_display_64" style>
-                <a class="outer-link" href="#">立即注册</a>
+                <!-- 跳转到注册页面 -->
+                <router-link :to="{name:'register'}">立即注册</router-link>
                 <span>|</span>
                 <a class="outer-link" href="#">忘记密码？</a>
               </div>
             </div>
-            <button @click="go">测试</button>
+
             <!-- 其他登录方式 s -->
             <div
               style="display: block;"
@@ -144,14 +152,16 @@
         </label>
       </div>
     </div>
+    <!-- 注册组件 -->
+    <!-- <Register /> -->
     <!-- 底部组件 -->
-
     <Asiders />
   </div>
 </template>
 
 <script>
 import Asiders from "./Aside";
+// import Register from "./register";
 import qs from "qs";
 // window.console.log(Asiders)
 // import Vue from "vue";
@@ -161,6 +171,7 @@ export default {
     return {
       isplay: true,
       ti: true,
+      link: "",
       valueName: "",
       valuePass: "",
       i: { name1: "短信验证码", name2: "密码" },
@@ -169,6 +180,7 @@ export default {
   },
   components: {
     Asiders
+    // Register
   },
   methods: {
     clear() {
@@ -180,14 +192,8 @@ export default {
       this.valuePass = "";
     },
     login() {
-      let userName = this.valueName;
-      let passWord = this.valuePass;
-      window.console.log(userName, passWord);
-      if (userName.length == 0) {
-        alert("请输入账号");
-      } else if (passWord.length == 0) {
-        alert("请输入密码");
-      } else {
+      // axios请求
+      let req = user => {
         // 拿到用户名和密码，发送请求到服务器拿数据
         this.axios({
           method: "post",
@@ -195,25 +201,82 @@ export default {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           },
-          data: qs.stringify({
-            userName: userName,
-            passWord: passWord
-          })
+          data: qs.stringify(user)
         }).then(response => {
-          const data = response;
-          window.console.log("全部数据", data);
+          const data = response.data;
+          if (this.ti) {
+            switch (data) {
+              case "该用户未注册":
+                this.link = "该手机号码未注册";
+                break;
+              case "密码不正确":
+                this.link = "验证码不正确";
+                break;
+            }
+          } else {
+            switch (data) {
+              case "该用户未注册":
+                this.link = "该用户未注册";
+                break;
+              case "密码不正确":
+                this.link = "密码不正确";
+                break;
+            }
+          }
+          // 状态码成功，跳转路由
+          if (data == "登陆成功") {
+            this.$router.push({ name: "classify" });
+          }
+          return data;
+          // }
         });
-      }
-    },
+      };
 
-    // 测试函数
-    go() {
-      window.console.log(this.$refs.input1.value);
+      let userName = this.valueName;
+      let passWord = this.valuePass;
+      window.console.log(userName, passWord);
+
+      let user = {
+        userName: userName,
+        passWord: passWord
+      };
+      // 如果 "ti" 为true 则进行手机匹配
+      if (this.ti) {
+        var reg = /^1[3456789]\d{9}$/;
+        if (!reg.test(userName)) {
+          this.link = "请输入正确的手机号码";
+        } else {
+          if (passWord.length == 0) {
+            this.link = "请输入验证码";
+          } else {
+            let w = req(user);
+            window.console.log(w);
+          }
+        }
+      } else {
+        if (userName.length == 0) {
+          this.link = "请输入账号";
+        } else if (passWord.length == 0) {
+          this.link = "请输入密码";
+        } else {
+          req(user);
+        }
+      }
     }
+    // 测试函数
   },
   watch: {
     valueName() {
-      // window.console.log(this.valueName.length);
+      if (this.valueName.length > 0) {
+        this.link = "";
+      } else {
+        this.link = "";
+      }
+    },
+    valuePass() {
+      if (this.valuePass.length > 0) {
+        this.link = "";
+      }
     }
   }
 };
@@ -339,5 +402,18 @@ a {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   // padding: 2px;
+}
+// 提示信息框
+.Tips {
+  // display: none;
+  width: 80%;
+  height: 0.730037rem;
+}
+.error-con {
+  font-size: 0.742052rem;
+  float: left;
+  text-align: left;
+  padding-left: 2.120149rem;
+  color: #f66;
 }
 </style>

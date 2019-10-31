@@ -121,7 +121,7 @@ export default {
         }
       }
       // 把下标赋值给 vue 的 data
-      window.console.log(navIndex);
+      // window.console.log(navIndex);
       this.active = navIndex;
     },
     // clicks(inx) {
