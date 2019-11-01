@@ -13,9 +13,11 @@
     </div>
 
     <div class="list-wrap">
+      <!-- 循环出所有分组 -->
       <div v-for="(key,index) in shop" :key="index" class="list-item category0" ref="listitem">
+        <!-- 循环每小组的分组 -->
         <div v-for="(key,index) in key.category_list" :key="index" class="component-list-main">
-          <!-- img -->
+          <!-- 标题头 -->
           <div
             v-if="key.body.items&& key.body.items[0].path_type=='image'"
             class="cells_auto_fill"
@@ -29,21 +31,21 @@
               />
             </a>
           </div>
-          <!-- biaoti -->
+          <!-- 标题 -->
           <div v-if="key.body.category_name" name="m1" class="category_title">
             <span>{{key.body.category_name}}</span>
           </div>
-          <!-- zhangshi -->
+          <!-- 商品列表 -->
           <div
             v-if="key.body.items&&key.body.items.length >1"
             class="category_group box-flex"
             index="2"
           >
-            <!-- disan -->
+            <!-- 循环里分类小组 -->
             <div class="box">
               <div v-for="(key,index) in key.body.items" :key="index" class="product">
                 <a class="exposure item">
-                  <div data-v-6b9822de class="img">
+                  <div @click="Jumpdetails" class="img">
                     <img
                       class="big"
                       style="width: 2.760434rem; height: 2.760434rem"
@@ -52,7 +54,7 @@
                     />
                     <!---->
                   </div>
-                  <!-- fubiaoti -->
+                  <!-- 副标题 -->
                   <div class="name">{{key.product_name}}</div>
                 </a>
               </div>
@@ -91,10 +93,14 @@ export default {
     // window.console.log(this.onScroll);
   },
   destroy() {
-    // 必须移除监听器，不然当该vue组件被销毁了，监听器还在就会出错
+    // 移除监听器，vue组件被销毁了，监听器还在就会出错
     window.removeEventListener("scroll", this.onScroll);
   },
   methods: {
+    // 把商品ID传给详情页
+    Jumpdetails() {
+      this.$router.push({ name: "details", params: { goodsID: "1" } });
+    },
     // 滚动监听器
     onScroll() {
       // 获取所有锚点元素
@@ -134,23 +140,19 @@ export default {
       // 获取当前 offsetTop
       let scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop;
-      // 定义一次跳 50 个像素，数字越大跳得越快，但是会有掉帧得感觉，步子迈大了会扯到蛋
-      // const STEP = 50;
-      // 判断是往下滑还是往上滑
+
       if (scrollTop > targetOffsetTop) {
         // 往上滑
-        // smoothUp();
         document.documentElement.scrollTop = targetOffsetTop;
       } else {
         // 往下滑
-        // smoothDown();
         document.documentElement.scrollTop = targetOffsetTop;
       }
     }
   }
 };
 </script>
-<style scoped>
+<style scoped lang="less">
 @import "./classify01.css";
 @import "./classify02.css";
 @import "./classify03.css";

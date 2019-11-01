@@ -7,6 +7,7 @@ import Cart from '../pages/Cart/Cart.vue';
 import My from '../pages/My/My.vue';
 import Login from "../pages/login/Login.vue";
 import Register from "../pages/login/Register.vue";
+import Details from "../pages/Details/Details.vue";
 const router = new VueRouter({
     mode: "hash",
     routes: [{
@@ -52,6 +53,13 @@ const router = new VueRouter({
             path: "/register",
             name: "register",
             component: Register,
+            meta: {
+                miss: false
+            }
+        }, {
+            path: "/details",
+            name: "details",
+            component: Details,
             meta: {
                 miss: false
             }
