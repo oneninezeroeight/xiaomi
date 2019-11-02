@@ -163,6 +163,7 @@
 import Asiders from "./Aside";
 // import Register from "./register";
 import qs from "qs";
+// import Cookies from "js-cookie";
 // window.console.log(Asiders)
 // import Vue from "vue";
 // Vue.component("Asider", Asider);
@@ -225,6 +226,8 @@ export default {
           }
           // 状态码成功，跳转路由
           if (data == "登陆成功") {
+            // window.console.log(user, this);
+            this.Cookies.set("userpass", user, { expires: 7 });
             this.$router.push({ name: "classify" });
           }
           return data;
