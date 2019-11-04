@@ -1,14 +1,16 @@
 <template>
-    <div>
-        {{name}}
-    </div>
+  <Main />
 </template>
 <script>
+import Main from "./main.vue";
 export default {
-    data () {
-        return {
-            name:"购物车"
-        }
-    }
-}
+  data() {
+    return {
+      name: "购物车"
+    };
+  },
+  components: {
+    Main
+  }
+};
 </script>

@@ -31,7 +31,7 @@ const router = new VueRouter({
             name: "cart",
             component: Cart,
             meta: {
-                miss: true
+                miss: false
             }
         },
         {
