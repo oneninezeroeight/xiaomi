@@ -1,5 +1,5 @@
 <template>
-  <div class="tabbar">
+  <div class="tabbar" v-show="cisok" >
     <van-tabbar v-model="active" fixed active-color="#ff6700" route>
       <van-tabbar-item to="/" icon="wap-home-o">首页</van-tabbar-item>
       <van-tabbar-item to="/classify" icon="orders-o">分类</van-tabbar-item>
@@ -10,11 +10,19 @@
 </template>
 
 <script>
+import {bus} from '../bus.js';
 export default {
   data () {
     return {
-      active: 0
+      active: 0,
+      cisok:true
     }
+  },
+  watch:{
+    
+  },
+  created(){
+    
   }
 }
 </script>

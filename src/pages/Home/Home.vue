@@ -3,7 +3,8 @@
     <div class="head">
       <van-nav-bar>
         <slot slot="title" name="title">
-          <van-search placeholder="请输入搜索关键词" v-model="value" disabled />
+          <!-- 点击进搜索页 -->
+          <van-search placeholder="请输入搜索关键词" v-model="value" disabled @click="$router.history.push('/search')" />
         </slot>
         <div slot="right">
           <van-icon name="contact" color="#ccc" size="1.346004rem" />
@@ -69,6 +70,7 @@ import Lifearound from "../../Piecemodule/Lifearound.vue";
 import Notebook from "../../Piecemodule/Notebook.vue";
 import Phone from "../../Piecemodule/Phone.vue";
 import Tv from "../../Piecemodule/Tv.vue";
+import {bus} from "../../bus.js";
 export default {
   data() {
     return {
@@ -92,11 +94,13 @@ export default {
     };
   },
   computed: {
+    //读取vuex的数据
     getdata() {
       return this.$store.getters.getdata;
     }
   },
   watch: {
+    //判断有没有数据
     getdata(val) {
       if (val) {
         this.body_isok = false;
@@ -104,16 +108,23 @@ export default {
     }
   },
   methods: {
+    //显示对应的导航
     nav_cik() {
       this.nav_isok = !this.nav_isok;
     },
+    //切换导航
     nl_clk(idx, isok) {
       this.n_index = idx;
       if (isok) {
         this.nav_cik();
       }
-      this.nav_name = this.nav_data[idx].componen 
+      if(typeof idx == 'number'){
+        this.nav_name = this.nav_data[idx].componen 
+      }else{
+        return;
+      }
     },
+    //返回顶部
     ht_click() {
       document.documentElement.scrollTop = 0;
     },
@@ -129,9 +140,13 @@ export default {
     }
   },
   mounted() {
+    //监听滚动条
     window.addEventListener("scroll", this.getScrollPosition, false);
+  //通知头部隐藏
+        bus.$emit('headjt',{isok:false,title:"首页"});
   },
   destroyed() {
+    //离开页面关闭监听滚动条
     window.removeEventListener("scroll", this.getScrollPosition, false);
   },
   components: {
@@ -142,6 +157,10 @@ export default {
     Notebook,
     Phone,
     Tv
+  },
+  activated(){
+    //keep-alive激活时触发
+    bus.$emit('headjt',{isok:false,title:"首页"});
   }
 };
 </script>
@@ -326,6 +345,9 @@ export default {
     }
     .van-cell /deep/ .van-field__left-icon .van-icon {
       color: #969799;
+    }
+    .van-search__content  .van-cell__value  .van-field__body /deep/ .van-field__control{
+      line-height: 0;
     }
     .van-search {
       padding: 0.319716rem 0 0 0;

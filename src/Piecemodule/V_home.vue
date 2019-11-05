@@ -1,5 +1,5 @@
 <template>
-  <div class="main" v-if="body_data">
+  <a class="main" v-if="body_data">
     <van-swipe indicator-color="white" :loop="false">
       <van-swipe-item v-for="(item,index) in body_data[0].body.items" :key="index">
         <img
@@ -12,44 +12,41 @@
     </van-swipe>
     <div class="exposure">
       <div class="cells_auto_fill">
-        <a href="###" v-for="(item,index) in body_data[9].body.items" :key="index">
-          <img width="100%" :src="item.img_url" alt />
+        <a v-for="(item,index) in body_data[9].body.items" :key="index">
+          <img width="100%" v-lazy="item.img_url" alt />
         </a>
       </div>
       <div class="cells_auto_fill">
-        <a href="###" v-for="(item,index) in body_data[4].body.items" :key="index">
-          <img width="100%" :src="item.img_url" alt />
+        <a v-for="(item,index) in body_data[4].body.items" :key="index">
+          <img width="100%" v-lazy="item.img_url" alt />
         </a>
       </div>
     </div>
     <div class="multi_cell222">
-      <a href="###">
+      <a>
         <img :src="body_data[6].body.items[0].img_url" alt />
       </a>
-      <a href="###">
+      <a>
         <img :src="body_data[6].body.items[1].img_url" alt />
       </a>
-      <a href="###">
+      <a>
         <img :src="body_data[6].body.items[2].img_url" alt />
       </a>
     </div>
     <div class="multi_cell222">
-      <a href="###" style="width:100%">
+      <a style="width:100%">
         <img :src="body_data[7].body.items[0].img_url" alt />
       </a>
     </div>
     <div class="multi_cell222">
-      <a href="###" style="width:100%">
+      <a style="width:100%">
         <img :src="body_data[8].body.items[0].img_url" alt />
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[3].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[3].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[3].body.items[0].product_name}}</p>
@@ -58,15 +55,12 @@
             ￥{{body_data[3].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[3].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[3].body.items[1].img_url"
-            alt
-          />
+          <img v-lazy="body_data[3].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[3].body.items[1].product_name}}</p>
@@ -75,17 +69,14 @@
             ￥{{body_data[3].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[3].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[13].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[13].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[13].body.items[0].product_name}}</p>
@@ -94,15 +85,12 @@
             ￥{{body_data[13].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[13].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[13].body.items[1].img_url"
-            alt
-          />
+          <img v-lazy="body_data[13].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[13].body.items[1].product_name}}</p>
@@ -111,17 +99,14 @@
             ￥{{body_data[13].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[13].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[17].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[17].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[17].body.items[0].product_name}}</p>
@@ -130,15 +115,12 @@
             ￥{{body_data[17].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[17].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[17].body.items[1].img_url"
-            alt
-          />
+          <img v-lazy="body_data[17].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[17].body.items[1].product_name}}</p>
@@ -147,17 +129,14 @@
             ￥{{body_data[17].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[17].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[25].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[25].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[25].body.items[0].product_name}}</p>
@@ -166,15 +145,12 @@
             ￥{{body_data[25].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[25].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[25].body.items[1].img_url"
-            alt
-          />
+          <img v-lazy="body_data[25].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[25].body.items[1].product_name}}</p>
@@ -183,28 +159,25 @@
             ￥{{body_data[25].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[25].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <van-nav-bar title="更多小米手机产品 >" style="border-top:1px solid #ccc"></van-nav-bar>
     <div class="multi_cell222">
-      <a href="###" style="width:100%">
+      <a style="width:100%">
         <img :src="body_data[16].body.items[0].img_url" alt />
       </a>
     </div>
     <div class="multi_cell222">
-      <a href="###" style="width:100%">
+      <a style="width:100%">
         <img :src="body_data[19].body.items[0].img_url" alt />
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[21].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[21].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[21].body.items[0].product_name}}</p>
@@ -213,15 +186,12 @@
             ￥{{body_data[21].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[21].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[21].body.items[1].img_url"
-            alt
-          />
+          <img v-lazy="body_data[21].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[21].body.items[1].product_name}}</p>
@@ -230,17 +200,14 @@
             ￥{{body_data[21].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[21].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[24].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[24].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[24].body.items[0].product_name}}</p>
@@ -249,15 +216,12 @@
             ￥{{body_data[24].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[24].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[24].body.items[1].img_url"
-            alt
-          />
+          <img v-lazy="body_data[24].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[24].body.items[1].product_name}}</p>
@@ -266,17 +230,14 @@
             ￥{{body_data[24].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[24].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <div class="list_two_type13">
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[27].body.items[0].img_url"
-            alt
-          />
+          <img v-lazy="body_data[27].body.items[0].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[27].body.items[0].product_name}}</p>
@@ -285,15 +246,12 @@
             ￥{{body_data[27].body.items[0].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[27].body.items[0].product_id)">立即购买</div>
         </div>
       </a>
-      <a href="###">
+      <a>
         <div class="img">
-          <img
-            :src="body_data[27].body.items[1].img_url"
-            alt
-          />
+          <img :src="body_data[27].body.items[1].img_url" alt />
         </div>
         <div class="txt">
           <p class="name">{{body_data[27].body.items[1].product_name}}</p>
@@ -302,18 +260,18 @@
             ￥{{body_data[27].body.items[1].product_price}}
             <span>起</span>
           </p>
-          <div class="buybtn mauto">立即购买</div>
+          <div class="buybtn mauto" @click="godetails(body_data[27].body.items[1].product_id)">立即购买</div>
         </div>
       </a>
     </div>
     <van-nav-bar title="更多小米电视产品 >" style="border-top:1px solid #ccc"></van-nav-bar>
-    <div class="multi_cell222">
-      <a href="###" style="width:100%">
+    <a class="multi_cell222">
+      <a style="width:100%">
         <img :src="body_data[70].body.items[0].img_url" alt />
       </a>
-    </div>
+    </a>
     <van-loading size="24px" vertical v-if="!body_data">加载中...</van-loading>
-  </div>
+  </a>
 </template>
 <script>
 import {
@@ -328,7 +286,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setdata"])
+    ...mapActions(["setdata"]),
+    godetails(val) {
+      this.$router.push({path:"/details",query:{goodsid:val}});
+    }
   },
   computed: {
     getdata() {
@@ -342,7 +303,6 @@ export default {
   },
   created() {
     this.setdata();
-    // cons
   }
 };
 </script>
@@ -427,8 +387,8 @@ export default {
           background: #ea625b;
           width: 6.55418rem;
           margin: 0 auto;
-          padding: .53286rem 0;
-          font-size: .692718rem;
+          padding: 0.53286rem 0;
+          font-size: 0.692718rem;
         }
       }
     }

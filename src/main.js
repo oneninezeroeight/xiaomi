@@ -7,6 +7,13 @@ import router from './router/index.js';
 import "./libs/rem.js";
 import store from './store';
 import {get,post} from './axios/api.js';
+import VueLazyLoad from 'vue-lazyload';
+import Cookies from 'js-cookie'
+Vue.use(VueLazyLoad,{
+  error:require("./assets/error.jpg"),
+  loading: require("./assets/loading.jpg"),
+})
+Vue.prototype.Cookies = Cookies;
 Vue.prototype.$http = {get,post};
 Vue.config.productionTip = false
 Vue.use(Vant);

@@ -11,7 +11,8 @@ import store from '../store/index'
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') {
-    axios.defaults.baseURL = 'http://127.0.0.1:3111';
+    // http: //www.btccar.top
+    axios.defaults.baseURL = 'http://www.btccar.top:3111';
 } else if (process.env.NODE_ENV == 'debug') {
     axios.defaults.baseURL = '';
 } else if (process.env.NODE_ENV == 'production') {
